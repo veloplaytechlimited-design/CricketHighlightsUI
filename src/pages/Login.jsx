@@ -25,16 +25,6 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div>
-        
-VeloPlay's cloud solution helps Video Content Creators and Sports Enthusiasts create byte sized video highlights using AI. Also, enable the users drive greater engagement on social media platforms.
-<br></br>
-⦁	End to end AI Powered highlight generation
-<br></br>
-⦁	Creation and publishing Content based on pre-set rules & parameters
-<br></br>
-⦁	Drive Engagement via Social media Publishing
-      </div>
       <div className="bg-card w-[380px] p-8 rounded-xl shadow-lg">
         {/* Logo / Title */}
         <h1 className="text-3xl font-bold text-center mb-2">
