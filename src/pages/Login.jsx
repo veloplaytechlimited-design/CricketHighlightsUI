@@ -35,13 +35,13 @@ export default function Login() {
   function handleLogin(e) {
     e.preventDefault();
 
-    // ✅ MVP hardcoded authentication
+    //  hardcoded authentication
     if (
       email === "admin@matchclips.com" &&
       password === "admin123"
     ) {
       setError("");
-      navigate("/dashboard"); // ✅ redirect
+      navigate("/dashboard"); //  redirect
     } else {
       setError("Invalid email or password");
     }
@@ -130,7 +130,7 @@ export default function Login() {
             </button>
           </form>
 
-          {/* MVP hint */}
+          {/*  hint */}
           <p className="text-xs text-muted text-center mt-4">
             admin@matchclips.com / admin123
           </p>
