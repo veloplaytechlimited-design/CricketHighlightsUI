@@ -1,14 +1,24 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import UploadBox from "../components/UploadBox";
+import ProcessingStatus from "../components/ProcessingStatus";
 
 export default function Dashboard() {
   const [matchId, setMatchId] = useState(null);
-  const [status, setStatus] = useState("IDLE");
+  const [stage, setStage] = useState("UPLOAD"); 
+  // UPLOAD → PROCESSING → COMPLETED → FAILED
 
   function handleJobCreated(data) {
     setMatchId(data.matchId);
-    setStatus(data.status);
+    setStage("PROCESSING");
+  }
+
+  function handleProcessingCompleted() {
+    setStage("COMPLETED");
+  }
+
+  function handleProcessingFailed() {
+    setStage("FAILED");
   }
 
   return (
@@ -16,8 +26,8 @@ export default function Dashboard() {
       <Navbar />
 
       <main className="max-w-7xl mx-auto px-8 py-6 space-y-10">
-        {/* Upload Section */}
-        {!matchId && (
+        {/* Upload */}
+        {stage === "UPLOAD" && (
           <section>
             <h2 className="text-2xl font-semibold mb-4">
               Upload Match
@@ -26,20 +36,38 @@ export default function Dashboard() {
           </section>
         )}
 
-        {/* Processing Placeholder */}
-        {matchId && (
+        {/* Processing */}
+        {stage === "PROCESSING" && matchId && (
           <section>
-            <h2 className="text-2xl font-semibold mb-4">
-              Processing Status
-            </h2>
+            <ProcessingStatus
+              matchId={matchId}
+              onCompleted={handleProcessingCompleted}
+              onFailed={handleProcessingFailed}
+            />
+          </section>
+        )}
 
-            <div className="bg-card rounded-xl p-6 text-muted">
-              Match ID: <span className="text-white">{matchId}</span>
-              <br />
-              Status: <span className="text-white">{status}</span>
-              <br />
-              Processing has started. This may take ~30 minutes.
-            </div>
+        {/* Completed */}
+        {stage === "COMPLETED" && (
+          <section className="bg-card rounded-xl p-6">
+            <h2 className="text-2xl font-semibold mb-2">
+              Processing Completed
+            </h2>
+            <p className="text-muted">
+              Highlights are ready. Fetching clips next.
+            </p>
+          </section>
+        )}
+
+        {/* Failed */}
+        {stage === "FAILED" && (
+          <section className="bg-card rounded-xl p-6">
+            <h2 className="text-2xl font-semibold text-red-500 mb-2">
+              Processing Failed
+            </h2>
+            <p className="text-muted">
+              Something went wrong. Please try again.
+            </p>
           </section>
         )}
       </main>
